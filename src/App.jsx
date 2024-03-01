@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import loadingGif from './assets/loading.svg'
+import './assets/def_styles/main.sass'
+import Navbar from './Components/Nav'
 
 function App() {
   const [blogs, setBlogs] = useState([])
@@ -12,7 +12,9 @@ function App() {
         const data = await fetch(import.meta.env.VITE_URL)
         const json = await data.json()
         setBlogs(prevBlogs => [...prevBlogs, ...json])
-        setLoading(false)
+        setTimeout(() => {
+          setLoading(false)
+        }, 1000)
       } catch (error) {
         throw new Error(error)
       }
@@ -24,9 +26,14 @@ function App() {
   return (
     <>
       {
-        loading ? "loading..." : blogs.map((blog, index) => {
-          return <p>{blog.title}</p>
-        })
+        loading ? 
+        <div className='loading'>
+        <img src={loadingGif} alt='Loading..'></img> 
+        </div>
+        : 
+        <>
+          <Navbar></Navbar>
+        </>
       }
     </>
   )

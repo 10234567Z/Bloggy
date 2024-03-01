@@ -1,0 +1,61 @@
+$nav-bg: #e9cfa0
+
+@keyframes navBarAnimation
+    0%
+        transform: translateY( -100% )
+        opacity: 0
+    100%
+        transform: translateY( 0 )
+        opacity: 1
+
+ul
+    list-style: none
+
+h1
+    font-size: 3.5rem
+
+nav > ul
+    animation: navBarAnimation 0.4s linear forwards
+    display: flex
+    justify-content: space-around
+    align-items: center
+    padding: 5px
+    width: calc( 100vw - 3px )
+    height: 100px
+    background-color: $nav-bg
+    ref: &
+    & > ul
+        width: 50%
+        position: relative
+        display: flex
+        justify-content: flex-end
+        & > li
+            margin: 10px
+            position: relative
+        & > li > h3
+            z-index: 1
+            pointer-events: none
+            font-size: 1.5rem
+            cursor: pointer
+        @media ( hover:hover  )
+            & > li::after
+                content: ''
+                background-color: #000
+                position: absolute
+                height: 0
+                width: 0
+                border-bottom: 2px solid #000
+            & > li:hover::after
+                width: 100%
+                transition: width 0.4s linear
+    @media ( hover:hover  )
+        & > li::after
+            content: ''
+            background-color: #000
+            position: absolute
+            height: 0
+            width: 0
+            border-bottom: 4px solid #000
+        & > li:hover::after
+            width: 20%
+            transition: width 0.4s linear
