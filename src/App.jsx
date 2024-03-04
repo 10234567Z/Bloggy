@@ -1,39 +1,34 @@
-import { useEffect, useState } from 'react'
 import loadingGif from './assets/loading.svg'
 import './assets/def_styles/main.sass'
 import Navbar from './Components/Nav'
+import Main from './Components/Main/blogs'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { fetchBlogs } from './Components/Reducers/blogsReducer'
 
 function App() {
-  const [blogs, setBlogs] = useState([])
-  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch();
+  const blogs = useSelector((state) => state.blogs);
+
   useEffect(() => {
-    async function FetchBlogs() {
-      try {
-        const data = await fetch(import.meta.env.VITE_URL)
-        const json = await data.json()
-        setBlogs(prevBlogs => [...prevBlogs, ...json])
-        setTimeout(() => {
-          setLoading(false)
-        }, 1000)
-      } catch (error) {
-        throw new Error(error)
-      }
-    }
-    if(blogs.length === 0){
-      FetchBlogs()
-    }
-  }, [])
+    dispatch(fetchBlogs());
+  }, [dispatch]);
+
   return (
     <>
       {
-        loading ? 
-        <div className='loading'>
-        <img src={loadingGif} alt='Loading..'></img> 
-        </div>
-        : 
-        <>
-          <Navbar></Navbar>
-        </>
+        blogs.loading && !blogs.error
+          ?
+          <div className='loading'>
+            <img src={loadingGif} alt='Loading..'></img>
+          </div>
+          :
+          (blogs.error ? <h1>{blogs.error}</h1> :
+            <>
+              <Navbar></Navbar>
+              <Main></Main>
+            </>
+          )
       }
     </>
   )

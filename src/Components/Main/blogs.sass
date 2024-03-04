@@ -1,0 +1,38 @@
+@keyframes fadeIn
+    0%
+        transform: translateX( -100% )
+        opacity: 0
+    100%
+        transform: translateX( 0 )
+        opacity: 1
+
+.blogContainer
+    display: flex
+    flex-direction: column
+    width: 400px
+    border-radius: 6px
+    -webkit-box-shadow: 0px 0px 11px 5px rgba(0,0,0,0.04)
+    box-shadow: 0px 0px 11px 5px rgba(0,0,0,0.04)
+    border: ridge black 0.4px
+    ref: &
+    transition: 0.3s ease all
+    justify-content: center
+    align-items: center
+    gap: 100px
+    margin: 10px
+    animation: fadeIn 0.6s ease forwards
+    &:hover
+        -webkit-box-shadow: 0px 0px 11px 5px rgba(0,0,0,0.5)
+        box-shadow: 0px 0px 11px 5px rgba(0,0,0,0.5)
+
+.infBlog
+    display: flex
+    flex-direction: row
+    gap: 5px
+
+.comments , .infBlog h4
+    gap: 3px
+    display: flex
+    border-right: solid black 1px
+    flex-direction: row
+    padding-right: 5px
