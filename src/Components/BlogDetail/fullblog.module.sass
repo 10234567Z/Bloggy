@@ -75,6 +75,11 @@
 
 .blogComments
     max-width: 600px
+    ref: &
+    & img
+        transition: 0.3s ease all
+    & img:hover
+        transform: scale(1.1)
 
 .commentForm
     display: flex

@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import loadingGif from '../../assets/loading.svg'
 import commentImage from "/comment.svg";
 import style from "./fullblog.module.sass";
 import Navbar from "../Nav";
+import deleteImage from '../../assets/delete.svg'
+import editImage from '../../assets/edit.svg'
 
 
 export default function FullBlog() {
     const [loading, setLoading] = useState(true)
     const [blog, setBlog] = useState({})
+    const [comment, setComment] = useState('')
     const { id } = useParams()
     useEffect(() => {
         async function FetchBlog() {
@@ -22,7 +25,21 @@ export default function FullBlog() {
             }
         }
         FetchBlog()
-    }, [])
+    }, [blog])
+
+    const handleCommentSubmit = (e) => {
+        e.preventDefault()
+        axios.post(`${import.meta.env.VITE_URL}/blogs/${id}/comments`, { text: comment }, {
+            headers: {
+                'Authorization': `${localStorage.getItem('token')}`
+            },
+        })
+        .then(res  => {
+            setBlog({...blog, comments: [...blog.comments, res.data.comment]})
+            setComment('')
+        })
+        .catch(err => console.log(err))
+    }
     return (
         <>
             {
@@ -46,8 +63,8 @@ export default function FullBlog() {
                                 <h3>Comments</h3>
                                 {localStorage.getItem('token') ?
                                     <div>
-                                        <form className={style.commentForm}>
-                                            <textarea placeholder="Write your comment here.."></textarea>
+                                        <form className={style.commentForm} method="POST" onSubmit={handleCommentSubmit}>
+                                            <textarea placeholder="Write your comment here.." value={comment} onChange={e => setComment(e.target.value)}></textarea>
                                             <button>Comment</button>
                                         </form>
                                     </div>
@@ -63,6 +80,10 @@ export default function FullBlog() {
                                                 <div className={style.blogComments} key={index}>
                                                     <h4>{comment.user.userName}</h4>
                                                     <p>{comment.text}</p>
+                                                    <div className="commentControl">
+                                                        <img src={deleteImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer"}}/>
+                                                        <img src={editImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer"}}/>
+                                                    </div>
                                                 </div>
                                             )
                                         })
