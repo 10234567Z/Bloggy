@@ -2,6 +2,8 @@ import { Outlet, RouterProvider, createBrowserRouter, redirect } from "react-rou
 import App from "./App";
 import Error from "./error";
 import FullBlog from "./Components/BlogDetail/fullblog";
+import Login from "./Components/login";
+import Signup from "./Components/signup";
 
 
 export default function Router() {
@@ -13,7 +15,17 @@ export default function Router() {
         },
         {
             path: '/blog/:id',
-            element: <FullBlog/>,
+            element: <FullBlog />,
+            error: <Error />
+        },
+        {
+            path: '/login',
+            element: <Login />,
+            error: <Error />
+        },
+        {
+            path: '/signup',
+            element: <Signup/>,
             error: <Error />
         }
     ])

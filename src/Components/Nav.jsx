@@ -12,15 +12,39 @@ export default function Navbar() {
                         </Link>
                     </li>
                     <ul>
-                        <li>
-                            <h3>Create</h3>
-                        </li>
-                        <li>
-                            <h3>Login</h3>
-                        </li>
-                        <li>
-                            <h3>Register</h3>
-                        </li>
+                        {
+                            localStorage.getItem('token') ?
+                                <>
+                                    <li>
+                                        <Link to={'/create'} style={{ textDecoration: "none"}}>
+                                            <h3>Create</h3>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/profile'} style={{ textDecoration: "none"}}>
+                                            <h3>Profile</h3>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/logout'} style={{ textDecoration: "none"}}>
+                                            <h3>Logout</h3>
+                                        </Link>
+                                    </li>
+                                </>
+                                :
+                                <>
+                                    <li>
+                                        <Link to={'/login'} style={{ textDecoration: "none"}}>
+                                            <h3>Login</h3>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/signup'} style={{ textDecoration: "none"}}>
+                                            <h3>Signup</h3>
+                                        </Link>
+                                    </li>
+                                </>
+                        }
                     </ul>
                 </ul>
             </nav>
