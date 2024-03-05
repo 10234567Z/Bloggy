@@ -21,11 +21,6 @@ export default function Navbar() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to={'/profile'} style={{ textDecoration: "none"}}>
-                                            <h3>Profile</h3>
-                                        </Link>
-                                    </li>
-                                    <li>
                                         <Link to={'/logout'} style={{ textDecoration: "none"}}>
                                             <h3>Logout</h3>
                                         </Link>
