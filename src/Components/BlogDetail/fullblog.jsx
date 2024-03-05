@@ -81,7 +81,17 @@ export default function FullBlog() {
                                                     <h4>{comment.user.userName}</h4>
                                                     <p>{comment.text}</p>
                                                     <div className="commentControl">
-                                                        <img src={deleteImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer"}}/>
+                                                        <img src={deleteImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer"}} onClick={(e) => {
+                                                            axios.delete(`${import.meta.env.VITE_URL}/blogs/${id}/comments/${comment._id}`, {
+                                                                headers: {
+                                                                    'Authorization': `${localStorage.getItem('token')}`
+                                                                }
+                                                            })
+                                                            .then(res => {
+                                                                setBlog({...blog, comments: blog.comments.filter(c => c._id !== comment._id)})
+                                                            })
+                                                            .catch(err => console.log(err))
+                                                        }}/>
                                                         <img src={editImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer"}}/>
                                                     </div>
                                                 </div>
