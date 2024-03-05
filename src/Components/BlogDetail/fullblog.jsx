@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import axios from "axios"
 import loadingGif from '../../assets/loading.svg'
 import commentImage from "/comment.svg";
@@ -42,13 +42,25 @@ export default function FullBlog() {
                             <div className={style.blogContent}>
                                 <p>{blog.text}</p>
                             </div>
-                            <div className={style.blogComments}>
+                            <div className={style.commentContainer}>
                                 <h3>Comments</h3>
+                                {localStorage.getItem('token') ?
+                                    <div>
+                                        <form className={style.commentForm}>
+                                            <textarea placeholder="Write your comment here.."></textarea>
+                                            <button>Comment</button>
+                                        </form>
+                                    </div>
+                                    :
+                                    <div className={style.commentLogin}>
+                                        <Link to="/login">Login To Comment</Link>
+                                    </div>
+                                }
                                 {
                                     blog.comments.length === 0 ? <h4>No comments..yet!</h4> :
                                         blog.comments.map((comment, index) => {
                                             return (
-                                                <div className="comment" key={index}>
+                                                <div className={style.blogComments} key={index}>
                                                     <h4>{comment.user.userName}</h4>
                                                     <p>{comment.text}</p>
                                                 </div>
