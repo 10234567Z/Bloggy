@@ -10,13 +10,14 @@ import editImage from '../../assets/edit.svg'
 import { useDispatch, useSelector } from "react-redux";
 import '../popup.sass'
 import { fetchUser } from "../Reducers/usersReducer";
+import Popup from "../../popup";
 
 export default function FullBlog() {
     const [loading, setLoading] = useState(true)
     const [blog, setBlog] = useState({})
     const [comment, setComment] = useState('')
     const [show, setShow] = useState(false)
-    const [editing, setEditing] = useState('')
+    const [editing, setEditing] = useState({ id: '', text: '' })
     const { id } = useParams()
     const user = useSelector(state => state.user.username)
     const dispatch = useDispatch()
@@ -50,14 +51,14 @@ export default function FullBlog() {
 
     const handleEditSubmit = (e) => {
         e.preventDefault()
-        axios.put(`${import.meta.env.VITE_URL}/blogs/${id}/comments/${editing}`, { text: comment }, {
+        axios.put(`${import.meta.env.VITE_URL}/blogs/${id}/comments/${editing.id}`, { text: editing.text }, {
             headers: {
                 'Authorization': `${localStorage.getItem('token')}`
             },
         })
             .then(res => {
-                setBlog({ ...blog, comments: blog.comments.map(c => c._id === editing ? res.data.comment : c) })
-                setComment('')
+                setBlog({ ...blog, comments: blog.comments.map(c => c._id === editing.id ? res.data.comment : c) })
+                setEditing({ id: '', text: '' })
             })
             .catch(err => console.log(err))
         setShow(false)
@@ -67,10 +68,10 @@ export default function FullBlog() {
             <div className={`Popup ${show ? "show" : ""}`}>
                 <div className='PopupContent'>
                     <form action="#" onSubmit={handleEditSubmit}>
-                        <textarea placeholder='Content' value={comment} onChange={(e) => setComment(e.target.value)}  minLength={1} required></textarea>
+                        <textarea placeholder='Content' value={editing.text} onChange={(e) => setEditing({ ...editing, text: e.target.value })} minLength={1} required></textarea>
                         <div className="buttons">
                             <button type='submit'>Edit</button>
-                            <button type="button" onClick={() => {setShow(false); setEditing(''); }}>Close</button>
+                            <button type="button" onClick={() => { setShow(false), setEditing({ id: '', text: '' }) }}>Close</button>
                         </div>
                     </form>
                 </div>
@@ -129,7 +130,7 @@ export default function FullBlog() {
                                                             }} />
                                                             <img src={editImage} alt="edit" height='20px' width='20px' style={{ cursor: "pointer" }} onClick={() => {
                                                                 setShow(true)
-                                                                setEditing(comment._id)
+                                                                setEditing({ id: comment._id, text: comment.text })
                                                             }} />
                                                         </div>
                                                     }
