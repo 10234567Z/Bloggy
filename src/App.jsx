@@ -5,6 +5,7 @@ import Main from './Components/Main/blogs'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { fetchBlogs } from './Components/Reducers/blogsReducer'
+import { fetchUser } from './Components/Reducers/usersReducer'
 
 function App() {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchBlogs());
+    dispatch(fetchUser());
   }, [dispatch]);
 
   return (

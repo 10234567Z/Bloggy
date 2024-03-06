@@ -7,10 +7,9 @@ import style from "./fullblog.module.sass";
 import Navbar from "../Nav";
 import deleteImage from '../../assets/delete.svg'
 import editImage from '../../assets/edit.svg'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import '../popup.sass'
-
-
+import { fetchUser } from "../Reducers/usersReducer";
 
 export default function FullBlog() {
     const [loading, setLoading] = useState(true)
@@ -20,7 +19,7 @@ export default function FullBlog() {
     const [editing, setEditing] = useState('')
     const { id } = useParams()
     const user = useSelector(state => state.user.username)
-
+    const dispatch = useDispatch()
     useEffect(() => {
         async function FetchBlog() {
             try {
@@ -32,6 +31,7 @@ export default function FullBlog() {
             }
         }
         FetchBlog()
+        dispatch(fetchUser());
     }, [blog])
 
     const handleCommentSubmit = (e) => {
