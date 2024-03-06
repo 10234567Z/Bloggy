@@ -7,6 +7,7 @@ import style from "./fullblog.module.sass";
 import Navbar from "../Nav";
 import deleteImage from '../../assets/delete.svg'
 import editImage from '../../assets/edit.svg'
+import { useSelector } from "react-redux";
 
 
 export default function FullBlog() {
@@ -14,6 +15,8 @@ export default function FullBlog() {
     const [blog, setBlog] = useState({})
     const [comment, setComment] = useState('')
     const { id } = useParams()
+    const user = useSelector(state => state.user.username)
+
     useEffect(() => {
         async function FetchBlog() {
             try {
@@ -34,11 +37,11 @@ export default function FullBlog() {
                 'Authorization': `${localStorage.getItem('token')}`
             },
         })
-        .then(res  => {
-            setBlog({...blog, comments: [...blog.comments, res.data.comment]})
-            setComment('')
-        })
-        .catch(err => console.log(err))
+            .then(res => {
+                setBlog({ ...blog, comments: [...blog.comments, res.data.comment] })
+                setComment('')
+            })
+            .catch(err => console.log(err))
     }
     return (
         <>
@@ -80,20 +83,23 @@ export default function FullBlog() {
                                                 <div className={style.blogComments} key={index}>
                                                     <h4>{comment.user.userName}</h4>
                                                     <p>{comment.text}</p>
-                                                    <div className="commentControl">
-                                                        <img src={deleteImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer"}} onClick={(e) => {
-                                                            axios.delete(`${import.meta.env.VITE_URL}/blogs/${id}/comments/${comment._id}`, {
-                                                                headers: {
-                                                                    'Authorization': `${localStorage.getItem('token')}`
-                                                                }
-                                                            })
-                                                            .then(res => {
-                                                                setBlog({...blog, comments: blog.comments.filter(c => c._id !== comment._id)})
-                                                            })
-                                                            .catch(err => console.log(err))
-                                                        }}/>
-                                                        <img src={editImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer"}}/>
-                                                    </div>
+                                                    {
+                                                        comment.user.userName === user &&
+                                                        <div className="commentControl">
+                                                            <img src={deleteImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer" }} onClick={(e) => {
+                                                                axios.delete(`${import.meta.env.VITE_URL}/blogs/${id}/comments/${comment._id}`, {
+                                                                    headers: {
+                                                                        'Authorization': `${localStorage.getItem('token')}`
+                                                                    }
+                                                                })
+                                                                    .then(res => {
+                                                                        setBlog({ ...blog, comments: blog.comments.filter(c => c._id !== comment._id) })
+                                                                    })
+                                                                    .catch(err => console.log(err))
+                                                            }} />
+                                                            <img src={editImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer" }} />
+                                                        </div>
+                                                    }
                                                 </div>
                                             )
                                         })

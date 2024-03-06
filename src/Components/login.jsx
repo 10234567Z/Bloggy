@@ -2,15 +2,14 @@ import axios from "axios";
 import Navbar from "./Nav";
 import styles from './login.module.sass'
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signIn } from "./Reducers/usersReducer";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const user = useSelector(state => state.user)
-    const navigate =  useNavigate()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const handleSubmit = (e) => {
@@ -27,7 +26,7 @@ export default function Login() {
     }
     return (
         <main className={styles.main}>
-            <Navbar/>
+            <Navbar />
             <div className={styles.login}>
                 <h1>Login</h1>
                 <form method="POST">
