@@ -12,7 +12,7 @@ export default function Router() {
         {
             path: '/',
             element: <App />,
-            error: <Error />
+            errorElement: <Error />
         },
         {
             path: '/blog/:id',
@@ -22,17 +22,17 @@ export default function Router() {
         {
             path: '/login',
             element: <Login />,
-            error: <Error />
+            errorElement: <Error />
         },
         {
             path: '/signup',
             element: <Signup />,
-            error: <Error />
+            errorElement: <Error />
         },
         {
             path: '/logout',
             element: <Logout />,
-            error: <Error />
+            errorElement: <Error />
         }
     ])
 
