@@ -1,7 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 
 export default function Error() {
-    const location = useLocation()
+    const error = useRouteError()
+    console.log(error)
     return (
         <>
             <h1>Ah!..Seems like an error now</h1>

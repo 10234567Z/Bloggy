@@ -1,0 +1,71 @@
+.Popup
+    position: fixed
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -100%)
+    transition: transform 0.3s ease-in-out, opacity 0.4s ease
+    background-color: rgba(0,0 ,0 ,.4 )
+    padding: 20px
+    border-radius: 5px
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1)
+    opacity: 0
+    z-index: -1
+    ref: &
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    width: 100vw
+    height: 100vh
+    &.show
+        opacity: 1
+        z-index: 3
+        transform: translate(-50% , -50%)
+    & > .PopupContent
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        width: 100%
+        & > form
+            display: flex
+            flex-direction: column
+            justify-content: flex-start
+            align-items: center
+            padding: 15px
+            margin: 15px
+            border: 1px solid #000
+            border-radius: 5px
+            width: 100%
+            max-width: 400px
+            background-color: #f5f5f5
+            & > input
+                width: 100%
+                padding: 10px
+                margin: 10px 0
+                border: 1px solid #000
+                border-radius: 5px
+                font-size: 1.5rem
+            & > textarea
+                width: 100%
+                padding: 10px
+                margin: 10px 0
+                border: 1px solid #000
+                border-radius: 5px
+                font-size: 1.1rem
+                resize: none
+            & > .buttons
+                display: flex
+                flex-basis: row
+                gap: 10px
+                & > button
+                    padding: 10px
+                    margin: 10px 0
+                    border: none
+                    border-radius: 5px
+                    font-size: 1.5rem
+                    background-color: #4CAF50
+                    color: white
+                    cursor: pointer
+                    &:hover
+                        background-color: #45a049

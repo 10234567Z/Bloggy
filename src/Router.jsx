@@ -17,7 +17,7 @@ export default function Router() {
         {
             path: '/blog/:id',
             element: <FullBlog />,
-            error: <Error />
+            errorElement: <Error />
         },
         {
             path: '/login',

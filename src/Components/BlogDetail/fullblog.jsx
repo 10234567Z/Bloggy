@@ -8,12 +8,16 @@ import Navbar from "../Nav";
 import deleteImage from '../../assets/delete.svg'
 import editImage from '../../assets/edit.svg'
 import { useSelector } from "react-redux";
+import '../popup.sass'
+
 
 
 export default function FullBlog() {
     const [loading, setLoading] = useState(true)
     const [blog, setBlog] = useState({})
     const [comment, setComment] = useState('')
+    const [show, setShow] = useState(false)
+    const [editing, setEditing] = useState('')
     const { id } = useParams()
     const user = useSelector(state => state.user.username)
 
@@ -43,8 +47,34 @@ export default function FullBlog() {
             })
             .catch(err => console.log(err))
     }
+
+    const handleEditSubmit = (e) => {
+        e.preventDefault()
+        axios.put(`${import.meta.env.VITE_URL}/blogs/${id}/comments/${editing}`, { text: comment }, {
+            headers: {
+                'Authorization': `${localStorage.getItem('token')}`
+            },
+        })
+            .then(res => {
+                setBlog({ ...blog, comments: blog.comments.map(c => c._id === editing ? res.data.comment : c) })
+                setComment('')
+            })
+            .catch(err => console.log(err))
+        setShow(false)
+    }
     return (
         <>
+            <div className={`Popup ${show ? "show" : ""}`}>
+                <div className='PopupContent'>
+                    <form action="#" onSubmit={handleEditSubmit}>
+                        <textarea placeholder='Content' value={comment} onChange={(e) => setComment(e.target.value)}  minLength={1} required></textarea>
+                        <div className="buttons">
+                            <button type='submit'>Edit</button>
+                            <button type="button" onClick={() => {setShow(false); setEditing(''); }}>Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             {
                 loading ?
                     <div className='loading'>
@@ -67,7 +97,7 @@ export default function FullBlog() {
                                 {localStorage.getItem('token') ?
                                     <div>
                                         <form className={style.commentForm} method="POST" onSubmit={handleCommentSubmit}>
-                                            <textarea placeholder="Write your comment here.." value={comment} onChange={e => setComment(e.target.value)}></textarea>
+                                            <textarea placeholder="Write your comment here.." value={comment} onChange={e => setComment(e.target.value)} minLength={1} required></textarea>
                                             <button>Comment</button>
                                         </form>
                                     </div>
@@ -97,7 +127,10 @@ export default function FullBlog() {
                                                                     })
                                                                     .catch(err => console.log(err))
                                                             }} />
-                                                            <img src={editImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer" }} />
+                                                            <img src={editImage} alt="edit" height='20px' width='20px' style={{ cursor: "pointer" }} onClick={() => {
+                                                                setShow(true)
+                                                                setEditing(comment._id)
+                                                            }} />
                                                         </div>
                                                     }
                                                 </div>
