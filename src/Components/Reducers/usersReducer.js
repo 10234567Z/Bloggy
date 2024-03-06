@@ -9,11 +9,11 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        signIn(state, action){
+        signIn: (state, action) => {
             state.signedIn = true
             state.username = action.payload
         },
-        signOut(state){
+        signOut: (state) => {
             state.signedIn = false
             state.username = ""
         }

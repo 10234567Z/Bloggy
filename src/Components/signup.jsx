@@ -2,15 +2,23 @@ import axios from 'axios';
 import styles from './login.module.sass'
 import Navbar from "./Nav";
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { signIn , signOut } from './Reducers/usersReducer';
+import { useNavigate } from 'react-router-dom';
+
 export default function Signup(){
     const [username , setUsername] = useState('')
     const [password , setPassword] = useState('')
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const user = useSelector(state => state.user)
     const handleSubmit = (e) => {
         e.preventDefault()
         axios.post(`${import.meta.env.VITE_URL}/signup`, {userName: username, password: password})
             .then(res => {
+                dispatch(signIn(username))
                 localStorage.setItem('token', res.data.token)
-                window.location.href = '/'
+                navigate('/')
             })
             .catch(err => {
                 console.log(err)
