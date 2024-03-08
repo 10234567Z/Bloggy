@@ -7,7 +7,7 @@ export default function Navbar() {
             <nav>
                 <ul>
                     <li>
-                        <Link to={'/'} style={{ textDecoration: "none"}}>
+                        <Link to={'/'} style={{ textDecoration: "none" }}>
                             <h1>Bloggy</h1>
                         </Link>
                     </li>
@@ -16,12 +16,12 @@ export default function Navbar() {
                             localStorage.getItem('username') ?
                                 <>
                                     <li>
-                                        <Link to={'/create'} style={{ textDecoration: "none"}}>
+                                        <a href={`http://localhost:5173/${localStorage.getItem('token')}`} style={{ textDecoration: "none" }}>
                                             <h3>Create</h3>
-                                        </Link>
+                                        </a>
                                     </li>
                                     <li>
-                                        <Link to={'/logout'} style={{ textDecoration: "none"}}>
+                                        <Link to={'/logout'} style={{ textDecoration: "none" }}>
                                             <h3>Logout</h3>
                                         </Link>
                                     </li>
@@ -29,12 +29,12 @@ export default function Navbar() {
                                 :
                                 <>
                                     <li>
-                                        <Link to={'/login'} style={{ textDecoration: "none"}}>
+                                        <Link to={'/login'} style={{ textDecoration: "none" }}>
                                             <h3>Login</h3>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to={'/signup'} style={{ textDecoration: "none"}}>
+                                        <Link to={'/signup'} style={{ textDecoration: "none" }}>
                                             <h3>Signup</h3>
                                         </Link>
                                     </li>
