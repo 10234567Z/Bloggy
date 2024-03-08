@@ -1,5 +1,5 @@
 import axios from 'axios';
-import styles from './login.module.sass'
+import styles from './login.module.sass';
 import Navbar from "./Nav";
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -17,6 +17,7 @@ export default function Signup() {
             .then(res => {
                 dispatch(signIn(username))
                 localStorage.setItem('token', res.data.token)
+                localStorage.setItem('username', username)
                 navigate('/')
             })
             .catch(err => {

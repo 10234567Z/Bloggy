@@ -13,7 +13,7 @@ export default function Navbar() {
                     </li>
                     <ul>
                         {
-                            localStorage.getItem('token') ?
+                            localStorage.getItem('username') ?
                                 <>
                                     <li>
                                         <Link to={'/create'} style={{ textDecoration: "none"}}>

@@ -7,10 +7,8 @@ import style from "./fullblog.module.sass";
 import Navbar from "../Nav";
 import deleteImage from '../../assets/delete.svg'
 import editImage from '../../assets/edit.svg'
-import { useDispatch, useSelector } from "react-redux";
 import '../popup.sass'
-import { fetchUser } from "../Reducers/usersReducer";
-import Popup from "../../popup";
+
 
 export default function FullBlog() {
     const [loading, setLoading] = useState(true)
@@ -19,8 +17,6 @@ export default function FullBlog() {
     const [show, setShow] = useState(false)
     const [editing, setEditing] = useState({ id: '', text: '' })
     const { id } = useParams()
-    const user = useSelector(state => state.user.username)
-    const dispatch = useDispatch()
     useEffect(() => {
         async function FetchBlog() {
             try {
@@ -32,7 +28,6 @@ export default function FullBlog() {
             }
         }
         FetchBlog()
-        dispatch(fetchUser());
     }, [blog])
 
     const handleCommentSubmit = (e) => {
@@ -115,7 +110,7 @@ export default function FullBlog() {
                                                     <h4>{comment.user.userName}</h4>
                                                     <p>{comment.text}</p>
                                                     {
-                                                        comment.user.userName === user &&
+                                                        comment.user.userName === localStorage.getItem('username') &&
                                                         <div className="commentControl">
                                                             <img src={deleteImage} alt="delete" height='20px' width='20px' style={{ cursor: "pointer" }} onClick={(e) => {
                                                                 axios.delete(`${import.meta.env.VITE_URL}/blogs/${id}/comments/${comment._id}`, {

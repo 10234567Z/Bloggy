@@ -22,6 +22,7 @@ export default function Login() {
             .then(res => {
                 dispatch(signIn(username))
                 localStorage.setItem('token', res.data.token)
+                localStorage.setItem('username', username)
                 navigate('/')
             })
             .catch(err => {

@@ -9,6 +9,7 @@ export default function Logout(){
 
     useEffect(() => {
         localStorage.removeItem('token')
+        localStorage.removeItem('username')
         dispatch(signOut())
         navigate('/')
     }, [navigate])

@@ -3,7 +3,7 @@ import axios from "axios"
 
 const initialState = {
     signedIn: false,
-    username: "",
+    username: null,
 }
 
 export const fetchUser = createAsyncThunk('user/fetch', async () => {
@@ -11,8 +11,10 @@ export const fetchUser = createAsyncThunk('user/fetch', async () => {
         headers: {
             'Authorization': `${localStorage.getItem('token')}`
         }
+    }).then(res => {
+        localStorage.setItem('username', res.data.user.userName)
+        return res.data.user
     })
-        .then(res => res.data.user)
 })
 
 const userSlice = createSlice({
@@ -25,7 +27,7 @@ const userSlice = createSlice({
         },
         signOut: (state) => {
             state.signedIn = false
-            state.username = ""
+            state.username = null
         }
     },
     extraReducers: builder => {
