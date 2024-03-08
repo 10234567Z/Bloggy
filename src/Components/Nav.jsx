@@ -16,7 +16,7 @@ export default function Navbar() {
                             localStorage.getItem('username') ?
                                 <>
                                     <li>
-                                        <a href={`http://localhost:5173/${localStorage.getItem('token')}`} style={{ textDecoration: "none" }}>
+                                        <a href={`http://localhost:5173/?token=${localStorage.getItem('token')}`} style={{ textDecoration: "none" }}>
                                             <h3>Create</h3>
                                         </a>
                                     </li>
