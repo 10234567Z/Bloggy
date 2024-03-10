@@ -14,6 +14,7 @@ export default function Main() {
                     blogs.length === 0 ? <h1>No blogs...yet!</h1> :
                     blogs.blogs.map((blog, index) => {
                         return (
+                            blog.public &&
                             <Link to={`blog/${blog._id}`} style={{ textDecoration: "none"}} key={"container" + index}>
                                 <div className="blogContainer">
                                     <h3>{blog.title}</h3>
