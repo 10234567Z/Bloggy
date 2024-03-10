@@ -16,7 +16,7 @@ export default function Navbar() {
                             localStorage.getItem('username') ?
                                 <>
                                     <li>
-                                        <a href={`http://localhost:5173/`} style={{ textDecoration: "none" }}>
+                                        <a href={`https://blogger-orpin-theta.vercel.app/`} style={{ textDecoration: "none" }}>
                                             <h3>Create</h3>
                                         </a>
                                     </li>
