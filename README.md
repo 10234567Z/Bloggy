@@ -1,7 +1,8 @@
 # Bloggy
-Post your blogs here and let it reach the internet!  
-![image](https://github.com/10234567Z/Bloggy/assets/93607971/a605de94-c8ce-45fc-b780-75a2941add08)
-You can access it [here](https://bloggy-cyan.vercel.app/)
+View the blogs posted by users and comment your thoughts on them!
+![image](https://github.com/10234567Z/Bloggy/assets/93607971/a605de94-c8ce-45fc-b780-75a2941add08)  
+You can access it [here](https://bloggy-cyan.vercel.app/)  
+**For posting a blog and becoming a blogger , go to [blogger](https://github.com/10234567Z/Blogger)**
 
 ## Content
 * [Features](https://github.com/10234567Z/Bloggy?tab=readme-ov-file#features)
